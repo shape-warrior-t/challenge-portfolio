@@ -1,0 +1,30 @@
+{
+    "name": "typescript-challenges",
+    "version": "1.0.0",
+    "description": "Bonan Luan's Challenge Portfolio - TypeScript challenges",
+    "scripts": {
+        "test": "jest"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/shape-warrior-t/challenge-portfolio.git"
+    },
+    "author": "Bonan Luan",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/shape-warrior-t/challenge-portfolio/issues"
+    },
+    "homepage": "https://github.com/shape-warrior-t/challenge-portfolio#readme",
+    "devDependencies": {
+        "@eslint/js": "^9.5.0",
+        "@jest/globals": "^29.7.0",
+        "@types/eslint__js": "^8.42.3",
+        "eslint": "^8.57.0",
+        "jest": "^29.7.0",
+        "prettier": "3.3.2",
+        "ts-jest": "^29.1.5",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.4.5",
+        "typescript-eslint": "^7.13.1"
+    }
+}
