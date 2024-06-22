@@ -15,14 +15,14 @@
  *
  * Equality of elements is decided using `===`.
  */
-export default function subsequence_indices<T>(
+export default function subsequenceIndices<T>(
     arr: T[],
     sub: T[],
 ): number[] | null {
     /*
         Example runthroughs:
 
-        subsequence_indices([3, 1, 4, 1, 5, 9], [4, 1, 9])
+        subsequenceIndices([3, 1, 4, 1, 5, 9], [4, 1, 9])
         arr: [3, 1, 4, 1, 5, 9]    sub: [4, 1, 9]
               ^                          ^
         arr: [3, 1, 4, 1, 5, 9]    sub: [4, 1, 9]
@@ -39,7 +39,7 @@ export default function subsequence_indices<T>(
                     @  @     @  ^                 ^
         Final result: [2, 3, 5]
 
-        subsequence_indices([2, 6, 5], [2, 4])
+        subsequenceIndices([2, 6, 5], [2, 4])
         arr: [2, 6, 5]    sub: [2, 4]
               ^                 ^
         arr: [2, 6, 5]    sub: [2, 4]
