@@ -30,7 +30,7 @@ import subsequenceIndices from './subsequence-indices';
  * given randomly generated `sub` and `arr`,
  * `sub` is a subsequence of `arr` and also has a reasonably high length.
  */
-function list(maxLength: number) {
+function list(maxLength: number): fc.Arbitrary<string[]> {
     return fc.array(fc.constantFrom('a', 'b'), { maxLength });
 }
 
@@ -59,9 +59,9 @@ const listAndSubsequence: fc.Arbitrary<[string[], string[]]> = list(10).chain(
             minLength: arr.length,
             maxLength: arr.length,
         });
-        return inclusions.chain((ithElementIncluded) => {
+        return inclusions.map((ithElementIncluded) => {
             const sub = arr.filter((_, i) => ithElementIncluded[i]);
-            return fc.constant([arr, sub]);
+            return [arr, sub];
         });
     },
 );
