@@ -15,9 +15,11 @@ export default tseslint.config(
             },
         },
         rules: {
+            curly: ['error', 'multi-line'],
             eqeqeq: 'error',
             'no-constant-condition': 'off',
             'sort-imports': 'error',
+            '@typescript-eslint/explicit-function-return-type': 'error',
             '@typescript-eslint/naming-convention': [
                 'error',
                 {
@@ -55,9 +57,22 @@ export default tseslint.config(
                     modifiers: ['requiresQuotes'],
                 },
             ],
+            '@typescript-eslint/no-non-null-assertion': 'off',
             '@typescript-eslint/no-unnecessary-condition': [
                 'error',
                 { allowConstantLoopConditions: true },
+            ],
+            '@typescript-eslint/no-unused-vars': [
+                'error',
+                {
+                    args: 'all',
+                    argsIgnorePattern: '^_',
+                    caughtErrors: 'all',
+                    caughtErrorsIgnorePattern: '^_',
+                    destructuredArrayIgnorePattern: '^_',
+                    varsIgnorePattern: '^_',
+                    ignoreRestSiblings: true,
+                },
             ],
         },
     },

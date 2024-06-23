@@ -5,3 +5,4 @@ This repository contains my solutions to various small-scale programming challen
 Challenges:
 
 - [Subsequence Indices](typescript-challenges/code/subsequence-indices.ts) ([tests](typescript-challenges/code/subsequence-indices.test.ts)) [TypeScript, property-based testing, data structures & algorithms]
+- [Fibonacci Order](typescript-challenges/code/fibonacci-order.ts) ([tests](typescript-challenges/code/fibonacci-order.test.ts)) [TypeScript, unit testing, property-based testing, data structures & algorithms, complexity analysis, object-oriented programming]
