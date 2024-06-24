@@ -54,16 +54,7 @@ function expectStrictlyAscending(arr: number[]): void {
 
 /** Arbitrary for a list together with a random subsequence of that list. */
 const listAndSubsequence: fc.Arbitrary<[string[], string[]]> = list(10).chain(
-    (arr) => {
-        const inclusions = fc.array(fc.boolean(), {
-            minLength: arr.length,
-            maxLength: arr.length,
-        });
-        return inclusions.map((ithElementIncluded) => {
-            const sub = arr.filter((_, i) => ithElementIncluded[i]);
-            return [arr, sub];
-        });
-    },
+    (arr) => fc.subarray(arr).map((sub) => [arr, sub]),
 );
 
 test('b. returns non-null for subsequences', () => {
