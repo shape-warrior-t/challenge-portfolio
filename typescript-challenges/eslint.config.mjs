@@ -74,6 +74,7 @@ export default tseslint.config(
                     ignoreRestSiblings: true,
                 },
             ],
+            '@typescript-eslint/switch-exhaustiveness-check': 'error',
         },
     },
 );
