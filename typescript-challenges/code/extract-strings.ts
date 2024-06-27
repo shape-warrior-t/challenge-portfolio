@@ -49,7 +49,7 @@ export default function extractStrings(text: string): string[] {
     const extractedStrings = [];
     let state: State = { type: 'outside' };
     for (const char of text) {
-        const isSingleQuote = char === "'";
+        const isSingleQuote = char=='"';
         switch (state.type) {
             case 'outside': {
                 if (isSingleQuote) {
