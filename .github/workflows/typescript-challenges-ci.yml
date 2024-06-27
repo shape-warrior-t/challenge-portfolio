@@ -13,13 +13,14 @@ jobs:
     steps:
     - name: Check out
       uses: actions/checkout@v4
-    - name: Navigate to TypeScript challenge folder
-      run: cd typescript-challenges
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
         node-version: latest
         cache: 'npm'
+        cache-dependency-path: typescript-challenges/package-lock.json
+    - name: Navigate to TypeScript challenge folder
+      run: cd typescript-challenges
     - name: Install dependencies
       run: npm install
     - name: Lint
