@@ -10,6 +10,10 @@ jobs:
 
     runs-on: windows-latest
 
+    defaults:
+       run:
+         working-directory: ./typescript-challenges/
+
     steps:
     - name: Check out
       uses: actions/checkout@v4
@@ -19,8 +23,6 @@ jobs:
         node-version: latest
         cache: 'npm'
         cache-dependency-path: typescript-challenges/package-lock.json
-    - name: Navigate to TypeScript challenge folder
-      run: cd typescript-challenges
     - name: Install dependencies
       run: npm install
     - name: Lint
