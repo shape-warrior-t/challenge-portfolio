@@ -1,0 +1,35 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: CI for TypeScript challenges
+
+on: push
+
+jobs:
+  ci:
+
+    runs-on: windows-latest
+
+    defaults:
+       run:
+         working-directory: ./typescript-challenges/
+
+    steps:
+    - name: Check out
+      uses: actions/checkout@v4
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: latest
+        cache: 'npm'
+        cache-dependency-path: typescript-challenges/package-lock.json
+    - name: Install dependencies
+      run: npm install
+    - name: Lint
+      run: npx eslint .
+    - name: Check formatting
+      if: success() || failure()
+      run: npx prettier . --check
+    - name: Test
+      if: success() || failure()
+      run: npm test
