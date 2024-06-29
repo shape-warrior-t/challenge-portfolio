@@ -2,7 +2,11 @@
 
 name: CI for TypeScript challenges
 
-on: push
+on:
+  push:
+    paths:
+      - .github/workflows/typescript-challenges-ci.yml
+      - typescript-challenges/**
 
 jobs:
   ci:
