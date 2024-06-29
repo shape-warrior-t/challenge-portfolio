@@ -1,2 +1,3 @@
-node_modules/
+typescript-challenges/node_modules/
+rust_challenges/target/
 .*/
