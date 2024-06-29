@@ -1,0 +1,30 @@
+# This workflow checks for issues relating to this repository's Rust challenges.
+
+name: CI for Rust challenges
+
+on: push
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: "-Dwarnings"
+
+jobs:
+  ci:
+
+    runs-on: windows-latest
+
+    defaults:
+       run:
+         working-directory: ./rust_challenges/
+
+    steps:
+    - name: Check out
+      uses: actions/checkout@v4
+    - name: Lint
+      run: cargo clippy --all-targets --all-features
+    - name: Check formatting
+      if: success() || failure()
+      run: cargo fmt --check
+    - name: Test
+      if: success() || failure()
+      run: cargo test
