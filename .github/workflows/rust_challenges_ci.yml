@@ -2,7 +2,11 @@
 
 name: CI for Rust challenges
 
-on: push
+on:
+  push:
+    paths:
+      - .github/workflows/rust_challenges_ci.yml
+      - rust_challenges/**
 
 env:
   CARGO_TERM_COLOR: always
