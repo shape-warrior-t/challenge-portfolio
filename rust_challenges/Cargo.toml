@@ -4,3 +4,15 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+itertools = "0.13.0"
+
+[dev-dependencies]
+indoc = "2.0.5"
+pretty_assertions = "1.4.0"
+rstest = "0.21.0"
+
+[lints.clippy]
+explicit_into_iter_loop = "warn"
+explicit_iter_loop = "warn"
+semicolon_if_nothing_returned = "warn"
+semicolon_inside_block = "warn"
