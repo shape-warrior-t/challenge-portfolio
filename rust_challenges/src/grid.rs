@@ -124,7 +124,10 @@ impl<T: Debug> Debug for Grid<T> {
                 .map(|y| format!(
                     "    [{}],",
                     (0..self.width)
-                        .map(|x| format!("{:?}", self[(x, y)]))
+                        .map(|x| {
+                            let element = &self[(x, y)];
+                            format!("{element:?}")
+                        })
                         .join(", ")
                 ))
                 .join("\n")

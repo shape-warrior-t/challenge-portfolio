@@ -112,7 +112,8 @@ fn identify_basin_at(
 ) -> Result<(), CellCoordinates> {
     if basins[cell].is_none() {
         let lowest = locally_lowest_cell(region, cell)?;
-        if cell == lowest {
+        let cell_is_sink = cell == lowest;
+        if cell_is_sink {
             basins[cell] = Some(Basin { sink: cell });
         } else {
             identify_basin_at(region, lowest, basins)?;
@@ -132,20 +133,27 @@ fn locally_lowest_cell(
     region: &Region,
     cell: CellCoordinates,
 ) -> Result<CellCoordinates, CellCoordinates> {
-    let input_coordinates = cell;
-    let neighborhood = neighborhood_coordinates(cell);
-    let lowest_cells: Vec<(CellCoordinates, Altitude)> = neighborhood
+    let neighborhood = neighborhood_coordinates(cell)
         .into_iter()
         .filter_map(|coordinates| {
             let &altitude = region.get(coordinates)?;
             Some((coordinates, altitude))
-        })
-        .min_set_by_key(|&(_coordinates, altitude)| altitude);
-    let (lowest_cell_coordinates, _lowest_altitude) = lowest_cells
+        });
+    unique_lowest_altitude_cell(neighborhood).ok_or(cell)
+}
+
+/// Returns the coordinates of the cell of lowest altitude
+/// based on the given `(coordinate, altitude)` pairs,
+/// or None if there are multiple cells of lowest altitude.
+fn unique_lowest_altitude_cell(
+    coordinate_altitude_pairs: impl Iterator<Item = (CellCoordinates, Altitude)>,
+) -> Option<CellCoordinates> {
+    coordinate_altitude_pairs
+        .min_set_by_key(|&(_coordinates, altitude)| altitude)
         .into_iter()
         .exactly_one()
-        .map_err(|_| input_coordinates)?;
-    Ok(lowest_cell_coordinates)
+        .ok()
+        .map(|(coordinates, _altitude)| coordinates)
 }
 
 /// Given the coordinates of a cell, returns the possible coordinates of the cell and its neighbors.
