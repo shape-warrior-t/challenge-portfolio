@@ -101,11 +101,10 @@ pub fn identify_basins(region: &Region) -> Result<Grid<Basin>, CellCoordinates> 
     /*
         Time complexity analysis:
         Let c be the number of cells in the region.
-        This function completes in `O(c)` time in the worst case -- for an `n×n` square region,
-        this translates to a time complexity of `O(n^2)`.
-        - Disregarding work done in `identify_basin_at`,
-        `identify_basins` completes in `O(c)` time --
-        creating `basins`, executing the for loop, and mapping over `basins`
+        This function completes in `O(c)` time in the worst case --
+        for an `n×n` square region, this translates to a time complexity of `O(n^2)`.
+        - Disregarding work done in `identify_basin_at`, `identify_basins` completes in
+        `O(c)` time -- creating `basins`, executing the for loop, and mapping over `basins`
         can all be done in `O(c)` time.
         - `identify_basin_at` relies on memoization to achieve an efficient time complexity.
         Memoized calls complete in `O(1)` time,
