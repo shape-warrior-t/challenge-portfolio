@@ -57,17 +57,22 @@ impl<T> Grid<T> {
         (self.width, self.height)
     }
 
+    /// Converts a 2D index into a 1D index for the grid's data `Vec`, if possible.
+    fn convert_index_to_1d<I: GridIndex>(&self, index: I) -> Result<usize, I::Err> {
+        index.to_1d_index(self.width, self.height)
+    }
+
     /// Returns a reference to the element with the given index,
     /// or None if the index is out of bounds.
     pub fn get(&self, index: impl GridIndex) -> Option<&T> {
-        let index = index.to_1d_index(self.width, self.height).ok()?;
+        let index = self.convert_index_to_1d(index).ok()?;
         Some(&self.data[index])
     }
 
     /// Returns a mutable reference to the element with the given index,
     /// or None if the index is out of bounds.
     pub fn get_mut(&mut self, index: impl GridIndex) -> Option<&mut T> {
-        let index = index.to_1d_index(self.width, self.height).ok()?;
+        let index = self.convert_index_to_1d(index).ok()?;
         Some(&mut self.data[index])
     }
 
@@ -89,23 +94,17 @@ impl<T> Grid<T> {
     }
 }
 
-impl<T, I> Index<I> for Grid<T>
-where
-    I: GridIndex,
-{
+impl<T, I: GridIndex> Index<I> for Grid<T> {
     type Output = T;
     fn index(&self, index: I) -> &Self::Output {
-        let index = index.to_1d_index(self.width, self.height).unwrap();
+        let index = self.convert_index_to_1d(index).unwrap();
         &self.data[index]
     }
 }
 
-impl<T, I> IndexMut<I> for Grid<T>
-where
-    I: GridIndex,
-{
+impl<T, I: GridIndex> IndexMut<I> for Grid<T> {
     fn index_mut(&mut self, index: I) -> &mut Self::Output {
-        let index = index.to_1d_index(self.width, self.height).unwrap();
+        let index = self.convert_index_to_1d(index).unwrap();
         &mut self.data[index]
     }
 }
