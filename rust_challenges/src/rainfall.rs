@@ -98,6 +98,24 @@ pub fn identify_basins(region: &Region) -> Result<Grid<Basin>, CellCoordinates> 
         identify_basin_at(region, cell, &mut basins)?;
     }
     Ok(basins.map(|basin| basin.unwrap()))
+    /*
+        Time complexity analysis:
+        Let c be the number of cells in the region.
+        This function completes in `O(c)` time in the worst case -- for an `n×n` square region,
+        this translates to a time complexity of `O(n^2)`.
+        - Disregarding work done in `identify_basin_at`,
+        `identify_basins` completes in `O(c)` time --
+        creating `basins`, executing the for loop, and mapping over `basins`
+        can all be done in `O(c)` time.
+        - `identify_basin_at` relies on memoization to achieve an efficient time complexity.
+        Memoized calls complete in `O(1)` time,
+        so the cost can be absorbed into the cost at the call site.
+        There are at most `c` non-memoized calls -- one for each cell.
+        Non-memoized calls also complete in `O(1)`, disregarding work done in recursive calls:
+            - All non-`O(1)` functions in `locally_lowest_cell` operate on a maximum of 5 items,
+            so the function as a whole is `O(1)`.
+            - Everything else completes in `O(1)` time.
+    */
 }
 
 /// Identifies the basin for the cell at the given coordinates in the given region,
@@ -142,6 +160,13 @@ fn locally_lowest_cell(
     unique_lowest_altitude_cell(neighborhood).ok_or(cell)
 }
 
+/// Given the coordinates of a cell, returns the possible coordinates of the cell and its neighbors.
+/// Will return out-of-bounds coordinates for cells on the edge of the region.
+fn neighborhood_coordinates(cell: CellCoordinates) -> [CellCoordinates; 5] {
+    let (x, y) = cell;
+    [(x, y), (x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1)]
+}
+
 /// Returns the coordinates of the cell of lowest altitude
 /// based on the given `(coordinate, altitude)` pairs,
 /// or None if there are multiple cells of lowest altitude.
@@ -154,13 +179,6 @@ fn unique_lowest_altitude_cell(
         .exactly_one()
         .ok()
         .map(|(coordinates, _altitude)| coordinates)
-}
-
-/// Given the coordinates of a cell, returns the possible coordinates of the cell and its neighbors.
-/// Will return out-of-bounds coordinates for cells on the edge of the region.
-fn neighborhood_coordinates(cell: CellCoordinates) -> [CellCoordinates; 5] {
-    let (x, y) = cell;
-    [(x, y), (x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1)]
 }
 
 #[cfg(test)]
