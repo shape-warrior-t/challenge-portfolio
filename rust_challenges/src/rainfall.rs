@@ -10,6 +10,7 @@
 //! 2 6 5 3 5 8
 //! 9 7 9 3 1 3
 //! ```
+//!
 //! Rain that falls on a given cell will flow to other cells based on the relative altitudes of
 //! the cell and its orthogonal (not diagonal) neighbors:
 //! - Requirement: for a given cell and its neighbors, there is a unique cell of lowest altitude.
@@ -28,8 +29,7 @@
 //! 2 6 5 3 5 8
 //! 9 7 9 3 1 3
 //! ```
-//!
-//! Rain that falls on
+//! rain that falls on
 //!
 //! `cell (2, 1) (altitude 5)` will flow to
 //!
@@ -49,13 +49,13 @@
 //! 2 6 5 3 5 8
 //! 9 7 9 3 1 3
 //! ```
-//! We have the following sinks:
+//! we have the following sinks:
 //! ```text
 //! . a . b . .
 //! c . . . . .
 //! . . . . d .
 //! ```
-//! And the following associated basins:
+//! and the following associated basins:
 //! ```text
 //! a a a b b b
 //! c a b b d d
@@ -100,7 +100,7 @@ pub fn identify_basins(region: &Region) -> Result<Grid<Basin>, CellCoordinates> 
     Ok(basins.map(|basin| basin.unwrap()))
     /*
         Time complexity analysis:
-        Let c be the number of cells in the region.
+        Let `c` be the number of cells in the region.
         This function completes in `O(c)` time in the worst case --
         for an `n×n` square region, this translates to a time complexity of `O(n^2)`.
         - Disregarding work done in `identify_basin_at`, `identify_basins` completes in
