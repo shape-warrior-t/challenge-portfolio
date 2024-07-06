@@ -30,6 +30,7 @@
 use crate::grid::Grid;
 use std::collections::VecDeque;
 
+/// The possible square types.
 #[derive(Clone, Copy, PartialEq, Eq)]
 pub enum Square {
     Water,
@@ -60,10 +61,10 @@ pub enum Square {
 /// ```
 #[macro_export]
 macro_rules! island_grid {
-    (@convert .) => {Square::Water};
-    (@convert #) => {Square::Land};
+    (@convert .) => {$crate::island_sizes::Square::Water};
+    (@convert #) => {$crate::island_sizes::Square::Land};
     [$([$($square:tt)*])*] => {
-        Grid::from_2d_array([$([$(island_grid!(@convert $square)),*]),*])
+        $crate::grid::Grid::from_2d_array([$([$(island_grid!(@convert $square)),*]),*])
     };
 }
 
