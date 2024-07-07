@@ -1,4 +1,4 @@
-//! Problem (modified from
+//! Problem (based on
 //! https://codereview.meta.stackexchange.com/questions/6872/august-2016-community-challenge):
 //!
 //! Consider a rectangular region of land consisting of square cells at different altitudes,

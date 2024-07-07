@@ -1,5 +1,5 @@
 /**
- * Problem (inspired by
+ * Problem (based on
  * https://codegolf.stackexchange.com/questions/5529/is-string-x-a-subsequence-of-string-y):
  * given two lists `arr` and `sub`, find a list of indices where
  * `sub` occurs as a (not necessarily contiguous) subsequence of `arr`.
