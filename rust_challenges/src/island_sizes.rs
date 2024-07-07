@@ -1,4 +1,4 @@
-//! Problem (modified from
+//! Problem (based on
 //! https://codegolf.stackexchange.com/questions/6979/code-golf-count-islands):
 //! Consider a rectangular grid, where each square is either water or land.
 //! The squares of land can be partitioned into _islands_:
