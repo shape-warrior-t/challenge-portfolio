@@ -74,6 +74,10 @@ export default tseslint.config(
                     ignoreRestSiblings: true,
                 },
             ],
+            '@typescript-eslint/restrict-template-expressions': [
+                'error',
+                { allowNumber: true },
+            ],
             '@typescript-eslint/switch-exhaustiveness-check': 'error',
         },
     },
