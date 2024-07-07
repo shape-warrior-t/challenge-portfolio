@@ -10,19 +10,6 @@
 
 import assert from 'node:assert/strict';
 
-/**
- * Data type modelling a perfect square distance between two numbers.
- *
- * Consists of an origin integer (`origin`, available as `this.origin`),
- * an integer square root of a distance (`sqrtDist`, available as `this.sqrtDist`),
- * and a destination integer (`dest`, not directly available on the object)
- * such that `origin + sqrtDist^2 = dest`.
- */
-interface SquareDistance {
-    origin: bigint;
-    sqrtDist: bigint;
-}
-
 /** Yield the elements of OEIS sequence A030193. */
 export default function* squareDifferenceFree(): Generator<bigint, never> {
     /*
@@ -43,31 +30,51 @@ export default function* squareDifferenceFree(): Generator<bigint, never> {
 
         NOTE: the data in the above is organized in a way that
         prioritizes understandability over precise accuracy to the actual implementation.
-        For efficiency, `{0 + 4^2 = 16, 2 + 3^2 = 11, 5 + 3^2 = 14, 7 + 2^2 = 11}`
+        For efficiency purposes, `{0 + 4^2 = 16, 2 + 3^2 = 11, 5 + 3^2 = 14, 7 + 2^2 = 11}`
         is actually organized as something closer to
         `{11 = 2 + 3^2 = 7 + 2^2, 14 = 5 + 3^2, 16 = 0 + 4^2}`.
     */
-    const destToDistance = new Map<bigint, SquareDistance[]>();
+    const destToDistances = new Map<bigint, SquareDistance[]>();
     for (let dest = 0n; ; dest++) {
-        if (!destToDistance.has(dest)) {
+        if (!destToDistances.has(dest)) {
             yield dest;
-            destToDistance.set(dest, [{ origin: dest, sqrtDist: 0n }]);
+            const distance = new SquareDistance(dest, 0n);
+            destToDistances.set(dest, [distance]);
         }
-        for (const { origin, sqrtDist } of destToDistance.get(dest)!) {
-            assert(origin + sqrtDist ** 2n === dest);
-            const nextSqrtDist = sqrtDist + 1n;
-            const nextDest = origin + nextSqrtDist ** 2n;
-            if (!destToDistance.has(nextDest)) {
-                destToDistance.set(nextDest, []);
+        for (const distance of destToDistances.get(dest)!) {
+            assert(dest === distance.dest);
+            const nextDistance = distance.next();
+            const nextDest = nextDistance.dest;
+            if (!destToDistances.has(nextDest)) {
+                destToDistances.set(nextDest, []);
             }
-            destToDistance
-                .get(nextDest)!
-                .push({ origin, sqrtDist: nextSqrtDist });
+            destToDistances.get(nextDest)!.push(nextDistance);
         }
         /*
             Not necessary for correctness,
             but it's more memory-efficient to delete entries that will no longer be accessed.
         */
-        assert(destToDistance.delete(dest));
+        assert(destToDistances.delete(dest));
+    }
+}
+
+/** Data type modelling a perfect square distance between two numbers. */
+class SquareDistance {
+    /** Create a new distance. */
+    constructor(
+        /** The origin (smaller of the two numbers). */
+        readonly origin: bigint,
+        /** The square root of the distance between the two numbers. */
+        readonly sqrtDist: bigint,
+    ) {}
+
+    /** The destination (larger of the two numbers). */
+    get dest(): bigint {
+        return this.origin + this.sqrtDist ** 2n;
+    }
+
+    /** Return a new distance with the same origin and the next larger possible destination. */
+    next(): SquareDistance {
+        return new SquareDistance(this.origin, this.sqrtDist + 1n);
     }
 }

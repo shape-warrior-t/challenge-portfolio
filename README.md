@@ -9,6 +9,7 @@ Challenges:
 - [Extract Strings](typescript-challenges/code/extract-strings.ts) ([tests](typescript-challenges/code/extract-strings.test.ts)) [TypeScript, unit testing, property-based testing, data structures & algorithms, parsing, state machines]
 - [Rainfall + tests](rust_challenges/src/rainfall.rs) [Rust, unit testing, data structures & algorithms, dynamic programming, complexity analysis, macros]
 - [Island Sizes + tests](rust_challenges/src/island_sizes.rs) [Rust, unit testing, data structures & algorithms, flood fill, complexity analysis, macros, object-oriented programming]
+- [Square-difference-free](typescript-challenges/code/square-difference-free.ts) ([tests](typescript-challenges/code/square-difference-free.test.ts)) [TypeScript, data structures & algorithms, object-oriented programming]
 
 Helper code:
 
