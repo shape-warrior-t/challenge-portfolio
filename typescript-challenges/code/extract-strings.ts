@@ -19,15 +19,13 @@
  * a closing single quote or the start of an escaped single quote,
  * along with the portion of the string parsed so far.
  *
- * Not sure whether Node.js optimizes repeated string concatenation
- * from `O(n^2)` time to `O(n)` time, and couldn't find out after some searching,
- * so I'm appending to character arrays and `join()`ing into strings as needed instead,
- * just to be on the safe side.
+ * Note: V8 apparently optimizes repeated string concatenation to not be quadratic time,
+ * so we can represent `parsed` as a string instead of an array of characters.
  */
 type State =
     | { type: 'outside' }
-    | { type: 'inside'; parsed: string[] }
-    | { type: 'transition'; parsed: string[] };
+    | { type: 'inside'; parsed: string }
+    | { type: 'transition'; parsed: string };
 
 /**
  * Extract and return all strings from the given text,
@@ -54,7 +52,7 @@ export default function extractStrings(text: string): string[] {
             case 'outside': {
                 if (isSingleQuote) {
                     // Hit opening quote, parsing a string now.
-                    state = { type: 'inside', parsed: [] };
+                    state = { type: 'inside', parsed: '' };
                 }
                 // Else: not parsing a string, ignore.
                 break;
@@ -69,21 +67,21 @@ export default function extractStrings(text: string): string[] {
                     state = { type: 'transition', parsed: state.parsed };
                 } else {
                     // Parse the next character of the string.
-                    state.parsed.push(char);
+                    state.parsed += char;
                 }
                 break;
             }
             case 'transition': {
                 if (isSingleQuote) {
                     // Escaped single quote -- still parsing the string.
-                    state.parsed.push("'");
+                    state.parsed += "'";
                     state = { type: 'inside', parsed: state.parsed };
                 } else {
                     /*
                         The previous character was a closing single quote,
                         finished parsing the string.
                     */
-                    extractedStrings.push(state.parsed.join(''));
+                    extractedStrings.push(state.parsed);
                     state = { type: 'outside' };
                 }
                 break;
