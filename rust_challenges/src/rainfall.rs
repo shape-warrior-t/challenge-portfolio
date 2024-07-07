@@ -29,14 +29,10 @@
 //! 2 6 5 3 5 8
 //! 9 7 9 3 1 3
 //! ```
-//! rain that falls on
-//!
-//! `cell (2, 1) (altitude 5)` will flow to
-//!
-//! `cell (3, 1) (altitude 3)`, then flow to and collect in
-//!
-//! `cell (3, 0) (altitude 2)`,
-//!
+//! rain that falls on \
+//! `cell (2, 1) (altitude 5)` will flow to \
+//! `cell (3, 1) (altitude 3)`, then flow to and collect in \
+//! `cell (3, 0) (altitude 2)`, \
 //! so `cell (2, 1)` drains into `cell (3, 0)`. Note that every sink drains into itself.
 //!
 //! Every sink is associated with a _basin_: the set of cells that drain into the sink.
