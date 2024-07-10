@@ -22,7 +22,7 @@ export default function splitOnNewChars(str: string): string[] {
             encounteredChars.add(char);
             arr.push('');
         }
-        arr[arr.length - 1] += char;
+        arr[arr.length - 1]! += char;
     }
     return arr;
 }
