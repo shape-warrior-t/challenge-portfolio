@@ -2,13 +2,14 @@
  * Tests for Subsequence Indices, ensuring that the output of
  * `subsequenceIndices(arr, sub)` is always correct.
  *
- * Properties tested:
- * a. If `subsequenceIndices(arr, sub)` is a list of indices `[i_0, i_1, ...]`,
- * then the list is strictly ascending
- * and `[arr[i_0], arr[i_1], ...]` represents the same list as `sub`.
- * b. If `subsequenceIndices(arr, sub)` is null, then `sub` is not a subsequence of `arr` --
- * equivalently, if `sub` is a subsequence of `arr`,
- * then `subsequenceIndices(arr, sub)` is not null.
+ * If `subsequenceIndices(arr, sub)` returns a list of indices `[i_0, i_1, ...]`,
+ * we can always verify correctness by checking that the list is strictly ascending
+ * and that `[arr[i_0], arr[i_1], ...]` represents the same list as `sub`.
+ * Based on that, we have the following tests:
+ * - When `sub` is guaranteed to be a subsequence of `arr`,
+ * `subsequenceIndices(arr, sub)` returns the correct list of indices and never returns null.
+ * - When `arr` and `sub` are arbitrary,
+ * `subsequenceIndices(arr, sub)` either returns the correct list of indices or returns null.
  *
  * NOTE: generating indices `[i_0, i_1, ...]` and testing that
  * `subsequenceIndices(arr, [arr[i_0], arr[i_1], ...])` is the same as `[i_0, i_1, ...]`
@@ -23,28 +24,14 @@ import fc from 'fast-check';
 import { pairwise } from 'itertools';
 import subsequenceIndices from './subsequence-indices';
 
-/**
- * Arbitrary for list inputs to `subsequenceIndices`.
- *
- * Elements are taken from a set of size 2 in order to maximize the chances that,
- * given randomly generated `sub` and `arr`,
- * `sub` is a subsequence of `arr` and also has a reasonably high length.
- */
-function list(maxLength: number): fc.Arbitrary<string[]> {
-    return fc.array(fc.constantFrom('a', 'b'), { maxLength });
+function expectIndicesAreCorrect<T>(
+    indices: number[],
+    arr: T[],
+    sub: T[],
+): void {
+    expectStrictlyAscending(indices);
+    expect(indices.map((i) => arr[i])).toStrictEqual(sub);
 }
-
-test('a. list returns are valid', () => {
-    fc.assert(
-        fc.property(list(10), list(5), (arr, sub) => {
-            const indices = subsequenceIndices(arr, sub);
-            if (indices === null) return;
-            expectStrictlyAscending(indices);
-            const subFromIndices = indices.map((i) => arr[i]);
-            expect(subFromIndices).toStrictEqual(sub);
-        }),
-    );
-});
 
 function expectStrictlyAscending(arr: number[]): void {
     for (const [a, b] of pairwise(arr)) {
@@ -53,14 +40,37 @@ function expectStrictlyAscending(arr: number[]): void {
 }
 
 /** Arbitrary for a list together with a random subsequence of that list. */
-const listAndSubsequence: fc.Arbitrary<[string[], string[]]> = list(10).chain(
-    (arr) => fc.subarray(arr).map((sub) => [arr, sub]),
-);
+const listAndSubsequence: fc.Arbitrary<[number[], number[]]> = fc
+    .array(fc.integer({ min: 0, max: 9 }))
+    .chain((arr) => fc.subarray(arr).map((sub) => [arr, sub]));
 
-test('b. returns non-null for subsequences', () => {
+test('`sub` subsequence of `arr`', () => {
     fc.assert(
         fc.property(listAndSubsequence, ([arr, sub]) => {
-            expect(subsequenceIndices(arr, sub)).not.toBeNull();
+            const indices = subsequenceIndices(arr, sub);
+            expect(indices).not.toBeNull();
+            expectIndicesAreCorrect(indices!, arr, sub);
+        }),
+    );
+});
+
+/**
+ * Arbitrary for list inputs to `subsequenceIndices`.
+ *
+ * Elements are taken from a set of size 3 in order to raise the chances of
+ * `sub` being a subsequence or near-subsequence of `arr`.
+ */
+function list(maxLength: number): fc.Arbitrary<string[]> {
+    return fc.array(fc.constantFrom('a', 'b', 'c'), { maxLength });
+}
+
+test('`arr` and `sub` arbitrary', () => {
+    fc.assert(
+        fc.property(list(10), list(5), (arr, sub) => {
+            const indices = subsequenceIndices(arr, sub);
+            if (indices !== null) {
+                expectIndicesAreCorrect(indices, arr, sub);
+            }
         }),
     );
 });
