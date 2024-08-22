@@ -7,9 +7,9 @@
  * and that `[arr[i_0], arr[i_1], ...]` represents the same list as `sub`.
  * Based on that, we have the following tests:
  * - When `sub` is guaranteed to be a subsequence of `arr`,
- * `subsequenceIndices(arr, sub)` returns the correct list of indices and never returns null.
+ *   `subsequenceIndices(arr, sub)` returns the correct list of indices and never returns null.
  * - When `arr` and `sub` are arbitrary,
- * `subsequenceIndices(arr, sub)` either returns the correct list of indices or returns null.
+ *   `subsequenceIndices(arr, sub)` either returns the correct list of indices or returns null.
  *
  * NOTE: generating indices `[i_0, i_1, ...]` and testing that
  * `subsequenceIndices(arr, [arr[i_0], arr[i_1], ...])` is the same as `[i_0, i_1, ...]`

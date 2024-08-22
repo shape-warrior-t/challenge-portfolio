@@ -1,7 +1,7 @@
 /**
  * Tests for Extract Strings:
  * - Testing `extractStrings` with input-output pairs
- * formed through the inverse process of incorporating a list of strings into text.
+ *   formed through the inverse process of incorporating a list of strings into text.
  * - Unit tests to ensure that `extractStrings` throws on invalid input.
  */
 

@@ -14,11 +14,11 @@
 //! Rain that falls on a given cell will flow to other cells based on the relative altitudes of
 //! the cell and its orthogonal (not diagonal) neighbors:
 //! - Requirement: for a given cell and its neighbors, there is a unique cell of lowest altitude.
-//! Regions that violate this requirement are considered invalid.
+//!   Regions that violate this requirement are considered invalid.
 //! - If a cell has a higher altitude than one or more of its neighbors,
-//! then rain will flow from the cell to the neighbor with the lowest altitude.
+//!   then rain will flow from the cell to the neighbor with the lowest altitude.
 //! - If a cell has a lower altitude than all of its neighbors,
-//! then it is a sink, and rain will collect in the cell.
+//!   then it is a sink, and rain will collect in the cell.
 //!
 //! For any given cell, there is a unique sink that the cell _drains into_ --
 //! rain that falls on the cell will eventually flow to and collect in the sink.
@@ -100,15 +100,15 @@ pub fn identify_basins(region: &Region) -> Result<Grid<Basin>, CellCoordinates> 
         This function completes in `O(c)` time in the worst case --
         for an `n×n` square region, this translates to a time complexity of `O(n^2)`.
         - Disregarding work done in `identify_basin_at`, `identify_basins` completes in
-        `O(c)` time -- creating `basins`, executing the for loop, and mapping over `basins`
-        can all be done in `O(c)` time.
+          `O(c)` time -- creating `basins`, executing the for loop, and mapping over `basins`
+          can all be done in `O(c)` time.
         - `identify_basin_at` relies on memoization to achieve an efficient time complexity.
-        Memoized calls complete in `O(1)` time,
-        so the cost can be absorbed into the cost at the call site.
-        There are at most `c` non-memoized calls -- one for each cell.
-        Non-memoized calls also complete in `O(1)`, disregarding work done in recursive calls:
+          Memoized calls complete in `O(1)` time,
+          so the cost can be absorbed into the cost at the call site.
+          There are at most `c` non-memoized calls -- one for each cell.
+          Non-memoized calls also complete in `O(1)`, disregarding work done in recursive calls:
             - All non-`O(1)` functions in `locally_lowest_cell` operate on a maximum of 5 items,
-            so the function as a whole is `O(1)`.
+              so the function as a whole is `O(1)`.
             - Everything else completes in `O(1)` time.
     */
 }

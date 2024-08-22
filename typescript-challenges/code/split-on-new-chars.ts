@@ -4,7 +4,7 @@
  * transform a string `str` into a list of strings `arr` such that:
  * - `arr.join('') === str`
  * - A new substring begins precisely when
- * a previously unencountered character is encountered in the string.
+ *   a previously unencountered character is encountered in the string.
  *
  * For example, `'aababaccabac'` should be split into `['aa', 'baba', 'ccabac']`.
  */

@@ -81,17 +81,17 @@ pub fn island_sizes(grid: &Grid<Square>) -> Vec<usize> {
         for an `n×n` square grid, this translates to a time complexity of `O(n^2)`.
         - Note that all operations of `VisitTracker` complete in `O(1)` time.
         - Creating `visited`, iterating over `grid`, and collecting into a `Vec`
-        can all be done in `O(s)` time, disregarding work done in `visit_island`.
+          can all be done in `O(s)` time, disregarding work done in `visit_island`.
         - The work done across all `visit_island` calls takes `O(s)` time:
             - The code outside the while loop takes `O(1)` time,
-            and executes at most `s` times, taking `O(s)` time across all calls.
+              and executes at most `s` times, taking `O(s)` time across all calls.
             - The while loop condition takes `O(1)` time,
-            so the cost can be absorbed into the loop body / post-loop return statement.
+              so the cost can be absorbed into the loop body / post-loop return statement.
             - The loop body takes `O(s)` time across all calls:
                 - The loop body takes `O(1)` time to complete.
-                Note that `NEIGHBOR_DISPLACEMENTS` has a fixed 8 elements.
+                  Note that `NEIGHBOR_DISPLACEMENTS` has a fixed 8 elements.
                 - The loop body executes at most `s` times across all calls,
-                since a square can only be visited (and thus, added into a tracker's queue) once.
+                  since a square can only be visited (and thus, added into a tracker's queue) once.
     */
 }
 

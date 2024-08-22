@@ -104,9 +104,9 @@ export default function fibonacciOrder(arr: bigint[]): number {
         - The input validation completes in `O(n)`.
         - Everything outside the for loop completes in `O(1)`.
         - The for loop completes in `O(n)`,
-        as it takes `n` iterations to complete, and each iteration is `O(1)`:
+          as it takes `n` iterations to complete, and each iteration is `O(1)`:
             - Since `slices` has at most two elements,
-            mapping and filtering over it takes `O(1)` time.
+              mapping and filtering over it takes `O(1)` time.
             - Everything else completes in `O(1)`.
     */
 }

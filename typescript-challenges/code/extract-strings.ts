@@ -3,9 +3,9 @@
  * https://codegolf.stackexchange.com/questions/249908/extract-strings-from-text):
  * extract all strings from a piece of text, where:
  * - Strings are delimited by single quotes (`'`) --
- * in `ab'cd'ef'gh'ij`, the strings are `cd` and `gh`.
+ *   in `ab'cd'ef'gh'ij`, the strings are `cd` and `gh`.
  * - Single quotes in strings are escaped by doubling --
- * in `ab'cd''ef''gh'ij`, the string is `cd'ef'gh`.
+ *   in `ab'cd''ef''gh'ij`, the string is `cd'ef'gh`.
  */
 
 /**
