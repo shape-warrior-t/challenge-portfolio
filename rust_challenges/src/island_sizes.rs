@@ -175,7 +175,6 @@ impl<'a> VisitTracker<'a> {
 #[cfg(test)]
 mod tests {
     use crate::island_sizes::*;
-    use pretty_assertions::assert_eq;
     use rstest::rstest;
 
     #[rstest]
