@@ -61,10 +61,10 @@ pub enum Square {
 /// ```
 #[macro_export]
 macro_rules! island_grid {
-    (@convert .) => {$crate::island_sizes::Square::Water};
-    (@convert #) => {$crate::island_sizes::Square::Land};
+    (@square .) => {$crate::island_sizes::Square::Water};
+    (@square #) => {$crate::island_sizes::Square::Land};
     [$([$($square:tt)*])*] => {
-        $crate::grid::Grid::from_2d_array([$([$(island_grid!(@convert $square)),*]),*])
+        $crate::grid::Grid::from_2d_array([$([$(island_grid!(@square $square)),*]),*])
     };
 }
 
