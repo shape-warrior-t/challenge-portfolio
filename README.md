@@ -12,6 +12,7 @@ Challenges:
 - [Square-difference-free](typescript-challenges/code/square-difference-free.ts) ([tests](typescript-challenges/code/square-difference-free.test.ts)) [TypeScript, data structures & algorithms, object-oriented programming]
 - [Split on New Chars](typescript-challenges/code/split-on-new-chars.ts) ([tests](typescript-challenges/code/split-on-new-chars.test.ts)) [TypeScript, property-based testing, data structures & algorithms]
 - [Mutable Aliasing + tests](rust_challenges/src/mutable_aliasing.rs) [Rust, unit testing, state machines]
+- [Bloxorz Model](rust_challenges/src/bloxorz_model.rs) ([src + tests](rust_challenges/src/bloxorz_model/)) [Rust, unit testing, object-oriented programming]
 
 Helper code:
 
