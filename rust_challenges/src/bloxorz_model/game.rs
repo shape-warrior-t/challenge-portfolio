@@ -6,8 +6,8 @@ use crate::bloxorz_model::board::{Board, Tile};
 /// A game of Bloxorz in a specific state.
 #[derive(Clone, Copy)]
 pub struct Game<'a> {
-    board: &'a Board,
-    block: Block,
+    pub board: &'a Board,
+    pub block: Block,
 }
 
 /// Information about the final outcome of a game of Bloxorz.
@@ -70,7 +70,7 @@ mod tests {
     fn play<'a>(mut game: Game<'a>, directions: &[Direction]) -> Game<'a> {
         for (i, &direction) in directions.iter().enumerate() {
             let Status::Active(active_game) = game.status() else {
-                panic!("move {i}: cannot make a move in a finished game")
+                panic!("cannot make a move in a finished game: move {i} of {directions:?}")
             };
             game = active_game.make_move(direction);
         }

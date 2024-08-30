@@ -3,7 +3,7 @@
 use crate::bloxorz_model::board::{Board, Coordinates, Tile};
 
 /// A direction in which the block can be moved.
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Direction {
     Left,
     Right,
@@ -19,7 +19,7 @@ pub const DIRECTIONS: [Direction; 4] = [
 ];
 
 /// The orientation of the block.
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 pub enum Orientation {
     /// Standing up, covering a 1×1 area.
     Upright,
@@ -34,7 +34,7 @@ pub enum Orientation {
 /// The coordinates of the block refer to the top left square of its covered area.
 /// The block is not, by itself, associated with a board --
 /// on its own, it can move to any pair of integer coordinates.
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 pub struct Block(pub Coordinates, pub Orientation);
 
 impl Block {
@@ -91,11 +91,6 @@ impl Block {
         self.full_coordinates()
             .iter()
             .any(|&coordinates| board.tile_at(coordinates) == tile)
-    }
-
-    pub fn touch_stats(self, tile: Tile, board: &Board) -> [bool; 2] {
-        self.full_coordinates()
-            .map(|coordinates| board.tile_at(coordinates) == tile)
     }
 
     /// Returns whether the block would be standing upright on a tile of the given type
